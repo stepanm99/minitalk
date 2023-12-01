@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:21:14 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/01 19:22:33 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:46:06 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	main(int argc, const char **argv)
 		else if (ft_match(argv[2], "world"))
 			kill(server_pid, SIGUSR2);
 	}
-	
 	pid = getpid();
 	printf("pid: %i\n", pid);
 	return (0);

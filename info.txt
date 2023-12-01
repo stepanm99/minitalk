@@ -2,7 +2,10 @@ In order to complete the mandatory part, you are allowed to use the following fu
 ◦ write
 
 
-◦ ft_printf and any equivalent YOU coded ◦ signal
+◦ ft_printf and any equivalent YOU coded
+
+
+◦ signal
 
 
 ◦ sigemptyset
