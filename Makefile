@@ -30,18 +30,10 @@ $(NAME_CLIENT): $(OBJ_CLIENT)
 
 clean:
 	@rm -f $(OBJ_SERVER) $(OBJ_CLIENT)
-	@make clean -C ./ft_printf
-
 
 fclean: clean
 	@rm -f $(NAME_SERVER) $(NAME_CLIENT)
 
 re: fclean all
-
-alltest: all
-	@./$(NAME)
-
-test:
-	@./$(NAME)
 
 .PHONY: all clean fclean re test
