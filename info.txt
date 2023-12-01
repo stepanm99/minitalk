@@ -1,0 +1,52 @@
+In order to complete the mandatory part, you are allowed to use the following functions:
+◦ write
+
+
+◦ ft_printf and any equivalent YOU coded ◦ signal
+
+
+◦ sigemptyset
+from signal.h
+int sigemptyset(sigset_t *set);
+intializes the signal set sigset_t
+returns 0 or -1 if fail
+
+◦ sigaddset
+from signal.h
+
+◦ sigaction
+from signal.h
+int sigaction(int signum, const struct sigaction *_Nullable restrict act, struct sigaction *_Nullable restrict oldact);
+
+
+◦ kill
+from signal.h
+int kill(pid_t pid, int sig);
+can be used to send ANY signal to another PID
+returns 0 if at least one signal was sent, -1 if fail
+
+◦ getpid
+from unistd.h
+pid_t	getpid(void);
+pid_t is basically int32 type, could be printed with %i flag
+return the PID, obviously :D
+returns 0 if successfull; -1 if error
+
+◦ malloc
+
+
+◦ free
+
+
+◦ pause
+
+
+◦ sleep
+
+
+◦ usleep
+
+
+◦ exit
+
+◦ sigset_t *set
