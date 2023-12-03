@@ -3,59 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smelicha <smelicha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stepan <stepan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:21:21 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/01 22:29:50 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/03 02:11:59 by stepan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minitalk.h"
-
-void	print_hello(int n)
-{
-	printf("hello from server %i\n", n & 1);
-}
 
 void	print_world(int n)
 {
 	printf("world from server %i\n", n & 1);
 }
 
-void	listen(t_sdt *sdt)
-{
-
-}
-
-void	broadcast(t_sdt *sdt)
-{
-
-}
 
 void	handler(int	num)
 {
-	if (num & 1)
-		write(1, "1", 1);
-	else
-		write(1, "0", 1);
+	int	i;
+	
+	i++;
+	printf("%i\n", i);
+}
+
+
+void	clean(int n)
+{
+	exit(0);
 }
 
 int	main(void)
 {
-	struct sigaction	sa;
-	t_sdt	*sdt;
+	pid_t	pid;
 
-	sdt = malloc(sizeof(t_sdt));
-	if (!sdt)
-		return (-1);
-	sdt->pid = getpid();
-	printf("pid: %i\n", sdt->pid);
-	while (1)
+	pid = getpid();
+	printf("pid: %i\n", pid);
+	while(1)
 	{
 		signal(SIGUSR1, handler);
 		signal(SIGUSR2, handler);
-		usleep(100);
+		signal(SIGINT, clean);
 	}
-	free(sdt);
 	return (0);
 }
+
+/*
+int	main(void)
+{
+	struct sigaction *restrict	signal_action;
+	pid_t				pid;
+
+	signal_action->sa_handler = handler;
+	pid = getpid();
+	printf("pid: %i\n", pid);
+	while (1)
+	{
+		sigaction(SIGUSR1, signal_action, NULL);
+		sigaction(SIGUSR2, signal_action, NULL);
+		usleep(100);
+	}
+	return (0);
+}
+*/

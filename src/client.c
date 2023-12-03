@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smelicha <smelicha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stepan <stepan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:21:14 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/01 22:35:12 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/02 23:28:06 by stepan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ int	main(int argc, const char **argv)
 	if (argc == 3)
 	{
 		server_pid = ft_atoi(argv[1]);
-		if (ft_match(argv[2], "hello"))
+		if (ft_match(argv[2], "0"))
 			kill(server_pid, SIGUSR1);
-		else if (ft_match(argv[2], "world"))
+		else if (ft_match(argv[2], "1"))
 			kill(server_pid, SIGUSR2);
 	}
 	pid = getpid();
-	send_pid(pid, server_pid);
+//	send_pid(pid, server_pid);
 	printf("pid: %i\n", pid);
 	return (0);
 }

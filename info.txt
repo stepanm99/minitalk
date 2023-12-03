@@ -53,3 +53,29 @@ returns 0 if successfull; -1 if error
 ◦ exit
 
 ◦ sigset_t *set
+
+
+SIGACTION STRUCT
+
+struct sigaction {
+               void     (*sa_handler)(int);
+               void     (*sa_sigaction)(int, siginfo_t *, void *);
+               sigset_t   sa_mask;
+               int        sa_flags;
+               void     (*sa_restorer)(void);
+           };
+
+void		(*sa_handler)(int);
+-can be pointer to signal handling function
+
+void		(*sa_sigaction)(int, siginfo_t *, void *)
+-no need to use this
+
+sigset_t	sa_mask
+-specifies which signals should be blocked
+
+int			sa_flags
+-flags that modify behaviour of the signal
+
+void		(*sa_restorer)(void)
+-no need to use this in this case
