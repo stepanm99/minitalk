@@ -6,11 +6,13 @@
 /*   By: stepan <stepan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:21:21 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/03 02:11:59 by stepan           ###   ########.fr       */
+/*   Updated: 2023/12/03 02:52:54 by stepan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minitalk.h"
+
+int	g_bit_position;
 
 void	print_world(int n)
 {
@@ -20,10 +22,9 @@ void	print_world(int n)
 
 void	handler(int	num)
 {
-	int	i;
+	char	c;
 	
-	i++;
-	printf("%i\n", i);
+	
 }
 
 
