@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stepan <stepan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: smelicha <smelicha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:21:21 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/03 02:52:54 by stepan           ###   ########.fr       */
+/*   Updated: 2023/12/04 19:00:50 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,18 @@ void	print_world(int n)
 	printf("world from server %i\n", n & 1);
 }
 
-
 void	handler(int	num)
 {
-	char	c;
-	
-	
+//	char	c;
+	if (num - SIGUSR2)
+		write(1, "0", 1);
+	else
+		write(1, "1", 1);
 }
-
 
 void	clean(int n)
 {
+	write(1, "clean\n", 6);
 	exit(0);
 }
 
