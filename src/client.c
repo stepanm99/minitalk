@@ -6,54 +6,59 @@
 /*   By: smelicha <smelicha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:21:14 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/04 21:26:04 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/04 23:12:14 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minitalk.h"
 
-void	send_pid(pid_t pid, pid_t server_pid)
+int	ft_atoi(const char *str)
 {
-	int	i;
-	int	kill_ret;
+	size_t	i;
+	int		negflag;
+	int		n;
 
-	i = 32;
-	kill_ret = -1;
-	while (i != -1)
-		{
-			if ((pid >> i) & 1)
-				kill_ret = kill(server_pid, SIGUSR2);
-			else
-				kill_ret = kill(server_pid, SIGUSR1);
-			usleep(500);
-			i--;
-		}
-}
-
-void	send_character(char c, pid_t server_pid)
-{
-	int		i;
-
-	i = 7;
-	while (i != -1)
+	i = 0;
+	n = 0;
+	negflag = 1;
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
+		i++;
+	while (str[i] == '-' || str[i] == '+')
 	{
-		if ((c >> i) & 1)
-			kill(server_pid, SIGUSR2);
-		else
-			kill(server_pid, SIGUSR1);
-		usleep(10000);
-		i--;
+		if (str[i + 1] == '-' || str[i + 1] == '+')
+			return (0);
+		if (str[i] == '-')
+			negflag = (-1);
+		i++;
 	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		n = n * 10 + (str[i] - '0');
+		i++;
+	}
+	return (n * negflag);
 }
 
 void	send_string(const char *str, pid_t server_pid)
 {
-	int	i;
+	int		i;
+	int		j;
+	char	c;
 
 	i = 0;
 	while (str[i])
 	{
-		send_character(str[i], server_pid);
+		j = 7;
+		c = str[i];
+		while (j != -1)
+		{
+			if ((c >> j) & 1)
+				kill(server_pid, SIGUSR2);
+			else
+				kill(server_pid, SIGUSR1);
+			usleep(500);
+			j--;
+		}
 		i++;
 	}
 }
@@ -66,11 +71,6 @@ int	main(int argc, const char **argv)
 	{
 		server_pid = ft_atoi(argv[1]);
 		send_string(argv[2], server_pid);
-		// if (ft_match(argv[2], "0"))
-		// 	kill(server_pid, SIGUSR1);
-		// else if (ft_match(argv[2], "1"))
-		// 	kill(server_pid, SIGUSR2);
 	}
-//	send_pid(pid, server_pid);
 	return (0);
 }

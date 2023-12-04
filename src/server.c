@@ -6,85 +6,68 @@
 /*   By: smelicha <smelicha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:21:21 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/04 22:05:54 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/04 23:22:52 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minitalk.h"
 
-t_dts	*g_data;
-
-void	print_world(int n)
+void	print_number(int n, int fd)
 {
-	printf("world from server %i\n", n & 1);
+	int		i;
+	int		a[11];
+	char	c;
+
+	i = 0;
+	c = 0;
+	if (n == 0)
+		write(fd, "0", 1);
+	while (n != 0)
+	{
+		a[i] = n % 10;
+		n = n / 10;
+		i++;
+	}
+	i--;
+	while (i >= 0)
+	{
+		c = a[i] + '0';
+		i--;
+		write(fd, &c, 1);
+	}
 }
 
-void	handler(int	num)
+void	handler(int num)
 {
+	static char	c;
+	static int	i;
+
 	if (num - SIGUSR2)
-	{
-		g_data->c |= 0;
-		write(1, "0", 1);
-	}
+		c += 0;
 	else
+		c += 1;
+	i++;
+	if (i == 8)
 	{
-		g_data->c |= 1;
-		write(1, "1", 1);
+		write(1, &c, 1);
+		i = 0;
+		c = '\0';
 	}
-	g_data->i++;
-	g_data->c = g_data->c << 1;
-	if (g_data->i == 8)
-	{
-		g_data->c = g_data->c << 7;
-		write(1, &g_data->c, 1);
-		write(1, "\n", 1);
-		g_data->i = 0;
-		g_data->c = '\0';
-	}
-}
-
-void	clean(int n)
-{
-	free(g_data);
-	exit(0);
+	c = c << 1;
 }
 
 int	main(void)
 {
 	pid_t	pid;
 
-	if (!g_data)
-	{
-		g_data = malloc(sizeof(t_dts));
-		g_data->c = '\0';
-		g_data->i = 0;
-	}
 	pid = getpid();
-	printf("pid: %i\n", pid);
-	while(1)
+	print_number(pid, 1);
+	write(1, "\n", 1);
+	while (1)
 	{
 		signal(SIGUSR1, handler);
 		signal(SIGUSR2, handler);
-		signal(SIGINT, clean);
+		usleep(50);
 	}
 	return (0);
 }
-
-/*
-int	main(void)
-{
-	struct sigaction *restrict	signal_action;
-	pid_t				pid;
-
-	signal_action->sa_handler = handler;
-	pid = getpid();
-	printf("pid: %i\n", pid);
-	while (1)
-	{
-		sigaction(SIGUSR1, signal_action, NULL);
-		sigaction(SIGUSR2, signal_action, NULL);
-		usleep(100);
-	}
-	return (0);
-}
-*/
