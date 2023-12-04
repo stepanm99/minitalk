@@ -6,13 +6,13 @@
 /*   By: smelicha <smelicha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:21:21 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/04 19:00:50 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/04 22:05:54 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minitalk.h"
 
-int	g_bit_position;
+t_dts	*g_data;
 
 void	print_world(int n)
 {
@@ -21,16 +21,31 @@ void	print_world(int n)
 
 void	handler(int	num)
 {
-//	char	c;
 	if (num - SIGUSR2)
+	{
+		g_data->c |= 0;
 		write(1, "0", 1);
+	}
 	else
+	{
+		g_data->c |= 1;
 		write(1, "1", 1);
+	}
+	g_data->i++;
+	g_data->c = g_data->c << 1;
+	if (g_data->i == 8)
+	{
+		g_data->c = g_data->c << 7;
+		write(1, &g_data->c, 1);
+		write(1, "\n", 1);
+		g_data->i = 0;
+		g_data->c = '\0';
+	}
 }
 
 void	clean(int n)
 {
-	write(1, "clean\n", 6);
+	free(g_data);
 	exit(0);
 }
 
@@ -38,6 +53,12 @@ int	main(void)
 {
 	pid_t	pid;
 
+	if (!g_data)
+	{
+		g_data = malloc(sizeof(t_dts));
+		g_data->c = '\0';
+		g_data->i = 0;
+	}
 	pid = getpid();
 	printf("pid: %i\n", pid);
 	while(1)

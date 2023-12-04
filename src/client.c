@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:21:14 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/04 20:11:11 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/04 21:26:04 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	send_character(char c, pid_t server_pid)
 			kill(server_pid, SIGUSR2);
 		else
 			kill(server_pid, SIGUSR1);
-		usleep(500);
+		usleep(10000);
 		i--;
 	}
 }
