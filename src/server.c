@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:21:21 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/08 19:38:20 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/08 20:19:22 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,13 @@ int	get_client_pid(int num)
 		g_client_pid += 0;
 	else
 		g_client_pid += 1;
-	i++;
-	if (i == 33)
+	if (i == 32)
 	{
 		i = 0;
 		return (1);
 	}
+	i++;
 	g_client_pid = g_client_pid << 1;
-	printf("\nclient pid: %i\n", g_client_pid);
 	return (0);
 }
 

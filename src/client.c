@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:21:14 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/08 19:39:49 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/08 20:15:39 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,12 @@ int	main(int argc, const char **argv)
 {
 	pid_t	server_pid;
 	pid_t	pid;
-	char	c[1];
+	char	c[2];
 
 	c[0] = 4;
+	c[1] = '\0';
+	pid = getpid();
+	printf("\nclient pid: %i\n", pid);
 	if (argc == 3)
 	{
 		server_pid = ft_atoi(argv[1]);
