@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:21:14 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/04 23:12:14 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/08 19:39:49 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,22 @@ int	ft_atoi(const char *str)
 	return (n * negflag);
 }
 
+void	send_pid(pid_t pid, pid_t server_pid)
+{
+	int	i;
+
+	i = 32;
+	while (i != -1)
+		{
+			if ((pid >> i) & 1)
+				kill(server_pid, SIGUSR2);
+			else
+				kill(server_pid, SIGUSR1);
+			usleep(500);
+			i--;
+		}
+}
+
 void	send_string(const char *str, pid_t server_pid)
 {
 	int		i;
@@ -66,11 +82,16 @@ void	send_string(const char *str, pid_t server_pid)
 int	main(int argc, const char **argv)
 {
 	pid_t	server_pid;
+	pid_t	pid;
+	char	c[1];
 
+	c[0] = 4;
 	if (argc == 3)
 	{
 		server_pid = ft_atoi(argv[1]);
+		send_pid(pid, server_pid);
 		send_string(argv[2], server_pid);
+		send_string(c, server_pid);
 	}
 	return (0);
 }
