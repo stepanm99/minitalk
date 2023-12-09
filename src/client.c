@@ -6,7 +6,7 @@
 /*   By: stepan <stepan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:21:14 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/09 01:46:15 by stepan           ###   ########.fr       */
+/*   Updated: 2023/12/09 23:17:39 by stepan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	send_pid(pid_t pid, pid_t server_pid)
 	int	i;
 
 	i = 32;
-	while (i != -1)
+	while (i != 0)
 		{
 			if ((pid >> i) & 1)
 				kill(server_pid, SIGUSR2);
