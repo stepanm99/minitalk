@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minitalk.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smelicha <smelicha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stepan <stepan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:21:29 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/05 19:40:08 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/09 01:42:29 by stepan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <sys/types.h>
 # include <locale.h>
 # include <wchar.h>
+# include <stdio.h>
+# include <stdlib.h>
 
 /*
 state_flag:
@@ -50,5 +52,14 @@ typedef struct	s_c_data
 	int		outgoing_data_size;
 }	t_c_data;
 
+typedef struct	s_bit_counters
+{
+	int	sent;
+	int	received;
+}	t_bit_counter;
+
+void	print_number(int n, int fd);
+int		ft_atoi(const char *str);
+int		ft_strlen(const char *str);
 
 #endif

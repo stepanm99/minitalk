@@ -1,9 +1,9 @@
 NAME_SERVER = server
 NAME_CLIENT = client
 
-SRC_SERVER = src/server.c
+SRC_SERVER = src/server.c src/utils.c
 
-SRC_CLIENT = src/client.c
+SRC_CLIENT = src/client.c src/utils.c
 
 CC = cc
 FLAGS = -Wall -Wextra -Werror -O3

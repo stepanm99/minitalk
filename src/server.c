@@ -3,41 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smelicha <smelicha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stepan <stepan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:21:21 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/08 20:19:22 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/09 01:37:39 by stepan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minitalk.h"
 
 int	g_client_pid;
-
-void	print_number(int n, int fd)
-{
-	int		i;
-	int		a[11];
-	char	c;
-
-	i = 0;
-	c = 0;
-	if (n == 0)
-		write(fd, "0", 1);
-	while (n != 0)
-	{
-		a[i] = n % 10;
-		n = n / 10;
-		i++;
-	}
-	i--;
-	while (i >= 0)
-	{
-		c = a[i] + '0';
-		i--;
-		write(fd, &c, 1);
-	}
-}
 
 int	get_client_pid(int num)
 {
@@ -47,8 +22,9 @@ int	get_client_pid(int num)
 		g_client_pid += 0;
 	else
 		g_client_pid += 1;
-	if (i == 32)
+	if (i >= 32)
 	{
+		printf("\nclient_pid: %i\n", g_client_pid);
 		i = 0;
 		return (1);
 	}
@@ -80,11 +56,15 @@ void	handler(int num)
 			{
 				client_pid_flag = 0;
 				g_client_pid = 0;
+				i = 0;
+				c = '\0';
+				kill(g_client_pid, SIGUSR2);
 			}
 			i = 0;
 			c = '\0';
 		}
 		c = c << 1;
+		kill(g_client_pid, SIGUSR1);
 	}
 }
 
