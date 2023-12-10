@@ -6,7 +6,7 @@
 /*   By: stepan <stepan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:21:21 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/10 02:28:41 by stepan           ###   ########.fr       */
+/*   Updated: 2023/12/10 03:36:55 by stepan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,38 +36,49 @@ int	get_client_pid(int num)
 	return (0);
 }
 
-void	handler(int num)
+t_s_data	val_set(t_s_data data, int num)
 {
-	static char	c;
-	static int	i;
-	static int	client_pid_flag;
-
-	if (!client_pid_flag)
-		client_pid_flag = get_client_pid(num);
-	else
+	if (num)
 	{
 		if (num - SIGUSR2)
-			c += 0;
+			data.c += 0;
 		else
-			c += 1;
-		i++;
-		if (i == 8)
+			data.c += 1;
+		data.i++;
+	}
+	else
+	{
+		kill(g_client_pid, SIGUSR2);
+		data.client_pid_flag = 0;
+		g_client_pid = 0;
+		data.i = 0;
+		data.c = '\0';
+	}
+	return (data);
+}
+
+void	handler(int num)
+{
+	static t_s_data	data;
+
+	if (!data.client_pid_flag)
+		data.client_pid_flag = get_client_pid(num);
+	else
+	{
+		data = val_set(data, num);
+		if (data.i == 8)
 		{
-			if (c != 4)
-				write(1, &c, 1);
+			if (data.c != 4)
+				write(1, &data.c, 1);
 			else
 			{
-				kill(g_client_pid, SIGUSR2);
-				client_pid_flag = 0;
-				g_client_pid = 0;
-				i = 0;
-				c = '\0';
+				data = val_set(data, 0);
 				return ;
 			}
-			i = 0;
-			c = '\0';
+			data.i = 0;
+			data.c = '\0';
 		}
-		c = c << 1;
+		data.c = data.c << 1;
 		kill(g_client_pid, SIGUSR1);
 	}
 }

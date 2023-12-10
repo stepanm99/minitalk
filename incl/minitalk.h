@@ -6,7 +6,7 @@
 /*   By: stepan <stepan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:21:29 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/09 23:29:53 by stepan           ###   ########.fr       */
+/*   Updated: 2023/12/10 03:29:04 by stepan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,37 +26,14 @@
 #  define DELAY 10000
 # endif
 
-/*
-state_flag:
-	0: receiving clinet PID -> 1
-	1: receiving data size & allocating memory -> 2
-	2: 
-bit_pos: position of received bit in character
-zeros: number of zeros in the received data
-ones: number of ones in the received data
-*/
 typedef struct s_s_data
 {
-	pid_t	client_pid;
-	int		state_flag;
-	int		bit_pos;
-	int		zeros;
-	int		ones;
+	char	c;
+	int		i;
+	char	client_pid_flag;
 }	t_s_data;
 
-/*
-
-*/
-typedef struct	s_c_data
-{
-	pid_t	server_pid;
-	int		state_flag;
-	int		zeros;
-	int		ones;
-	int		outgoing_data_size;
-}	t_c_data;
-
-typedef struct	s_bit_counters
+typedef struct s_bit_counters
 {
 	int	sent;
 	int	received;
