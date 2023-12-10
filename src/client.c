@@ -6,7 +6,7 @@
 /*   By: stepan <stepan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:21:14 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/10 02:02:05 by stepan           ###   ########.fr       */
+/*   Updated: 2023/12/10 02:24:32 by stepan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,9 @@ void	send_pid(pid_t pid, pid_t server_pid)
 	while (i != -1)
 		{
 			if ((pid >> i) & 1)
-			{
-				write(1, "p1", 2);
 				kill(server_pid, SIGUSR2);
-			}
 			else
-			{
-				write(1, "p0", 2);
 				kill(server_pid, SIGUSR1);
-			}
 			usleep(DELAY);
 			i--;
 		}
@@ -50,15 +44,9 @@ void	send_string(const char *str, pid_t server_pid)
 		while (j != -1)
 		{
 			if ((c >> j) & 1)
-			{
-				write(1, "s1", 2);
 				kill(server_pid, SIGUSR2);
-			}
 			else
-			{
-				write(1, "s0", 2);
 				kill(server_pid, SIGUSR1);
-			}
 			usleep(DELAY);
 			j--;
 		}
@@ -79,15 +67,9 @@ void	print_result(void)
 void	handler(int num)
 {
 	if (num - SIGUSR1)
-	{
-		printf("kill routine\n");
 		print_result();
-	}
 	else
-	{
-		printf("adding bit\n");
 		g_bit_counter.received++;
-	}
 }
 
 int	main(int argc, const char **argv)
@@ -101,17 +83,13 @@ int	main(int argc, const char **argv)
 	pid = getpid();
 	signal(SIGUSR1, handler);
 	signal(SIGUSR2, handler);
-	printf("\nclient pid: %i\n", pid);
 	if (argc == 3)
 	{
 		server_pid = ft_atoi(argv[1]);
 		g_bit_counter.sent = (ft_strlen(argv[2]) * 8);
 		send_pid(pid, server_pid);
-		write(1, "\n", 1);
 		send_string(argv[2], server_pid);
-		write(1, "\n", 1);
 		send_string(c, server_pid);
-		write(1, "\n", 1);
 	}
 	return (0);
 }

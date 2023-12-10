@@ -6,7 +6,7 @@
 /*   By: stepan <stepan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:21:21 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/10 01:59:44 by stepan           ###   ########.fr       */
+/*   Updated: 2023/12/10 02:28:41 by stepan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,14 @@ int	get_client_pid(int num)
 
 	if (num - SIGUSR2)
 	{
-		write(1, "p0", 2);
 		g_client_pid += 0;
 	}
 	else
 	{
-		write(1, "p1", 2);
 		g_client_pid += 1;
 	}
 	if (i == 32)
 	{
-		printf("\nclient_pid: %i\n", g_client_pid);
 		i = 0;
 		return (1);
 	}
@@ -50,32 +47,21 @@ void	handler(int num)
 	else
 	{
 		if (num - SIGUSR2)
-		{
-			write(1, "c0", 2);
 			c += 0;
-		}
 		else
-		{
-			write(1, "c1", 2);
 			c += 1;
-		}
 		i++;
 		if (i == 8)
 		{
 			if (c != 4)
-			{
-				write(1, "\n", 1);
 				write(1, &c, 1);
-			}
 			else
 			{
-				write(1, "\nescape\n", 8);
 				kill(g_client_pid, SIGUSR2);
 				client_pid_flag = 0;
 				g_client_pid = 0;
 				i = 0;
 				c = '\0';
-				usleep(DELAY);
 				return ;
 			}
 			i = 0;
