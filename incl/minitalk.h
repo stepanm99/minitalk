@@ -6,7 +6,7 @@
 /*   By: stepan <stepan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:21:29 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/09 01:42:29 by stepan           ###   ########.fr       */
+/*   Updated: 2023/12/09 23:29:53 by stepan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@
 # include <wchar.h>
 # include <stdio.h>
 # include <stdlib.h>
+
+# ifndef DELAY
+#  define DELAY 10000
+# endif
 
 /*
 state_flag:

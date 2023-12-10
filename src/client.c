@@ -6,7 +6,7 @@
 /*   By: stepan <stepan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:21:14 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/09 23:17:39 by stepan           ###   ########.fr       */
+/*   Updated: 2023/12/10 02:02:05 by stepan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,19 @@ void	send_pid(pid_t pid, pid_t server_pid)
 	int	i;
 
 	i = 32;
-	while (i != 0)
+	while (i != -1)
 		{
 			if ((pid >> i) & 1)
+			{
+				write(1, "p1", 2);
 				kill(server_pid, SIGUSR2);
+			}
 			else
+			{
+				write(1, "p0", 2);
 				kill(server_pid, SIGUSR1);
-			usleep(10000);
+			}
+			usleep(DELAY);
 			i--;
 		}
 }
@@ -44,10 +50,16 @@ void	send_string(const char *str, pid_t server_pid)
 		while (j != -1)
 		{
 			if ((c >> j) & 1)
+			{
+				write(1, "s1", 2);
 				kill(server_pid, SIGUSR2);
+			}
 			else
+			{
+				write(1, "s0", 2);
 				kill(server_pid, SIGUSR1);
-			usleep(10000);
+			}
+			usleep(DELAY);
 			j--;
 		}
 		i++;
@@ -58,8 +70,8 @@ void	print_result(void)
 {
 	write(1, "\nbits sent: ", 12);
 	print_number(g_bit_counter.sent, 1);
-	write(1, "bits received: ", 15);
-	print_number(g_bit_counter.received, 1);
+	write(1, "\nbits received: ", 16);
+	print_number((g_bit_counter.received - 7), 1);
 	write(1, "\n", 1);
 	exit(0);
 }
@@ -71,7 +83,7 @@ void	handler(int num)
 		printf("kill routine\n");
 		print_result();
 	}
-	if (num - SIGUSR2)
+	else
 	{
 		printf("adding bit\n");
 		g_bit_counter.received++;
@@ -95,8 +107,11 @@ int	main(int argc, const char **argv)
 		server_pid = ft_atoi(argv[1]);
 		g_bit_counter.sent = (ft_strlen(argv[2]) * 8);
 		send_pid(pid, server_pid);
+		write(1, "\n", 1);
 		send_string(argv[2], server_pid);
+		write(1, "\n", 1);
 		send_string(c, server_pid);
+		write(1, "\n", 1);
 	}
 	return (0);
 }
