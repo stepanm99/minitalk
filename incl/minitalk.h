@@ -6,7 +6,7 @@
 /*   By: stepan <stepan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:21:29 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/10 03:29:04 by stepan           ###   ########.fr       */
+/*   Updated: 2023/12/10 03:40:42 by stepan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,9 @@
 # define MINITALK_H
 
 # include <unistd.h>
-# define _XOPEN_SOURCE 500
+//# define _XOPEN_SOURCE 500
 # include <signal.h>
 # include <sys/types.h>
-# include <locale.h>
-# include <wchar.h>
-# include <stdio.h>
 # include <stdlib.h>
 
 # ifndef DELAY

@@ -6,7 +6,7 @@ SRC_SERVER = src/server.c src/utils.c
 SRC_CLIENT = src/client.c src/utils.c
 
 CC = cc
-FLAGS = -Wall -Wextra -Werror -g
+FLAGS = -Wall -Wextra -Werror -O3
 DFLAGS = -Wall -Wextra -Werror -g -fsanitize=address -static-libsan
 
 OBJ_SERVER = $(SRC_SERVER:.c=.o)
