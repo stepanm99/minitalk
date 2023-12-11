@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smelicha <smelicha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stepan <stepan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/01 16:21:21 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/04 23:22:52 by smelicha         ###   ########.fr       */
+/*   Created: 2023/12/09 01:34:40 by stepan            #+#    #+#             */
+/*   Updated: 2023/12/09 01:40:12 by stepan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,37 +37,39 @@ void	print_number(int n, int fd)
 	}
 }
 
-void	handler(int num)
+int	ft_atoi(const char *str)
 {
-	static char	c;
-	static int	i;
+	size_t	i;
+	int		negflag;
+	int		n;
 
-	if (num - SIGUSR2)
-		c += 0;
-	else
-		c += 1;
-	i++;
-	if (i == 8)
+	i = 0;
+	n = 0;
+	negflag = 1;
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
+		i++;
+	while (str[i] == '-' || str[i] == '+')
 	{
-		write(1, &c, 1);
-		i = 0;
-		c = '\0';
+		if (str[i + 1] == '-' || str[i + 1] == '+')
+			return (0);
+		if (str[i] == '-')
+			negflag = (-1);
+		i++;
 	}
-	c = c << 1;
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		n = n * 10 + (str[i] - '0');
+		i++;
+	}
+	return (n * negflag);
 }
 
-int	main(void)
+int	ft_strlen(const char *str)
 {
-	pid_t	pid;
+	int	i;
 
-	pid = getpid();
-	print_number(pid, 1);
-	write(1, "\n", 1);
-	while (1)
-	{
-		signal(SIGUSR1, handler);
-		signal(SIGUSR2, handler);
-		usleep(50);
-	}
-	return (0);
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
 }

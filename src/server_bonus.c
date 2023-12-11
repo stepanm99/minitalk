@@ -3,57 +3,84 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smelicha <smelicha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stepan <stepan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:21:21 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/04 23:22:52 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/10 03:36:55 by stepan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minitalk.h"
 
-void	print_number(int n, int fd)
-{
-	int		i;
-	int		a[11];
-	char	c;
+int	g_client_pid;
 
-	i = 0;
-	c = 0;
-	if (n == 0)
-		write(fd, "0", 1);
-	while (n != 0)
+int	get_client_pid(int num)
+{
+	static int	i;
+
+	if (num - SIGUSR2)
 	{
-		a[i] = n % 10;
-		n = n / 10;
-		i++;
+		g_client_pid += 0;
 	}
-	i--;
-	while (i >= 0)
+	else
 	{
-		c = a[i] + '0';
-		i--;
-		write(fd, &c, 1);
+		g_client_pid += 1;
 	}
+	if (i == 32)
+	{
+		i = 0;
+		return (1);
+	}
+	i++;
+	g_client_pid = g_client_pid << 1;
+	return (0);
+}
+
+t_s_data	val_set(t_s_data data, int num)
+{
+	if (num)
+	{
+		if (num - SIGUSR2)
+			data.c += 0;
+		else
+			data.c += 1;
+		data.i++;
+	}
+	else
+	{
+		kill(g_client_pid, SIGUSR2);
+		data.client_pid_flag = 0;
+		g_client_pid = 0;
+		data.i = 0;
+		data.c = '\0';
+	}
+	return (data);
 }
 
 void	handler(int num)
 {
-	static char	c;
-	static int	i;
+	static t_s_data	data;
 
-	if (num - SIGUSR2)
-		c += 0;
+	if (!data.client_pid_flag)
+		data.client_pid_flag = get_client_pid(num);
 	else
-		c += 1;
-	i++;
-	if (i == 8)
 	{
-		write(1, &c, 1);
-		i = 0;
-		c = '\0';
+		data = val_set(data, num);
+		if (data.i == 8)
+		{
+			if (data.c != 4)
+				write(1, &data.c, 1);
+			else
+			{
+				data = val_set(data, 0);
+				return ;
+			}
+			data.i = 0;
+			data.c = '\0';
+		}
+		data.c = data.c << 1;
+		kill(g_client_pid, SIGUSR1);
 	}
-	c = c << 1;
 }
 
 int	main(void)
