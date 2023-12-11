@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   minitalk_bonus.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stepan <stepan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: smelicha <smelicha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:21:29 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/10 03:40:42 by stepan           ###   ########.fr       */
+/*   Updated: 2023/12/11 18:29:23 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#ifndef MINITALK_BONUS_H
+# define MINITALK_BONUS_H
 
 # include <unistd.h>
-//# define _XOPEN_SOURCE 500
 # include <signal.h>
 # include <sys/types.h>
 # include <stdlib.h>
 
 # ifndef DELAY
-#  define DELAY 10000
+#  define DELAY 1000
 # endif
 
 typedef struct s_s_data
